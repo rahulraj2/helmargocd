@@ -4,6 +4,8 @@
 
 replicaCount: 1
 
+appName: test1
+
 image:
   repository: docker.io/rahulraj/nginx:latest_11
   tag: latest
