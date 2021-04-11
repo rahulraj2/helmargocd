@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ template "sample.fullname" . }}
-data:
-  myvalue: "Hello World"
-  SOME_URL: https://www.google.com
