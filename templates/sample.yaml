@@ -13,19 +13,16 @@ spec:
 
   # Source of the application manifests
   source:
-    repoURL: https://github.com/argoproj/argocd-example-apps.git
+    repoURL: git@github.com:rahulraj2/helmargocd.git
     targetRevision: HEAD
-    path: guestbook
+    path: .
 
     # helm specific config
     helm:
       # Extra parameters to set (same as setting through values.yaml, but these take precedence)
       parameters:
-      - name: "nginx-ingress.controller.service.annotations.external-dns\\.alpha\\.kubernetes\\.io/hostname"
-        value: mydomain.example.com
-      - name: "ingress.annotations.kubernetes\\.io/tls-acme"
-        value: "true"
-        forceString: true # ensures that value is treated as a string
+      - name: "replicaCount"
+        value: 2
 
       # Release name override (defaults to application name)
       releaseName: guestbook
@@ -33,7 +30,7 @@ spec:
       # Helm values files for overriding values in the helm chart
       # The path is relative to the spec.source.path directory defined above
       valueFiles:
-      - values-prod.yaml
+      - values.yaml
 
       # Values file as block file
       values: |
