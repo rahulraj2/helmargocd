@@ -10,7 +10,7 @@ spec:
   source:
     path: .
     repoURL: 'git@github.com:rahulraj2/helmargocd.git'
-    targetRevision: master
+    targetRevision: Development
   project: default
   syncPolicy:
     automated:
