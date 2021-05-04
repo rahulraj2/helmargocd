@@ -31,7 +31,6 @@ spec:
           envFrom:
            - configMapRef:
               name: {{ template "sample.fullname" . }}
-
          volumeMounts:
           - name: config
             mountPath: "/config"
