@@ -31,14 +31,6 @@ spec:
           envFrom:
            - configMapRef:
               name: {{ template "sample.fullname" . }}
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
