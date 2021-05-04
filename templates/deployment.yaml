@@ -31,12 +31,29 @@ spec:
           envFrom:
            - configMapRef:
               name: {{ template "sample.fullname" . }}
+
+         volumeMounts:
+          - name: config
+            mountPath: "/config"
+            readOnly: true
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
     {{- end }}
+      volumes:
+    # You set volumes at the Pod level, then mount them into containers inside that Pod
+       - name: config
+         configMap:
+        # Provide the name of the ConfigMap you want to mount.
+          name: game-demo
+        # An array of keys from the ConfigMap to create as files
+          items:
+           - key: "game.properties"
+             path: "game.properties"
+           - key: "user-interface.properties"
+             path: "user-interface.properties"
     {{- with .Values.affinity }}
       affinity:
 {{ toYaml . | indent 8 }}
