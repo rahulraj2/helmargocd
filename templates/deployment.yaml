@@ -31,10 +31,10 @@ spec:
           envFrom:
            - configMapRef:
               name: {{ template "sample.fullname" . }}
-         volumeMounts:
-          - name: config
-            mountPath: "/config"
-            readOnly: true
+          volumeMounts:
+           - name: config
+             mountPath: "/config"
+             readOnly: true
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
