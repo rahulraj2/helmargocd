@@ -5,5 +5,4 @@ metadata:
 data:
   myvalue: "Hello World"
   SOME_URL: https://www.google.com
-  SOME_PARAM: "RAHUL"
   SOME_FILE: /config/game.properties
