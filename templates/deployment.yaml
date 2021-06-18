@@ -20,7 +20,6 @@ spec:
       labels:
         app: {{ template "sample.name" . }}
         release: {{ .Release.Name }}
-        buildnumber: {{ .Values.buildNumber }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
