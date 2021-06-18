@@ -4,6 +4,8 @@
 
 replicaCount: 3
 
+buildNumber: 2
+
 image:
   repository: test-node
   tag: latest
