@@ -4,7 +4,7 @@
 
 replicaCount: 3
 
-buildNumber: 3
+buildNumber: 4
 
 image:
   repository: test-node
