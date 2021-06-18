@@ -7,7 +7,6 @@ metadata:
     chart: {{ template "sample.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-    buildnumber: {{ .Values.buildNumber }}
 spec:
   replicas: {{ .Values.replicaCount }}
   revisionHistoryLimit: 3
@@ -15,7 +14,6 @@ spec:
     matchLabels:
       app: {{ template "sample.name" . }}
       release: {{ .Release.Name }}
-      buildnumber: {{ .Values.buildNumber }}
   template:
     metadata:
       labels:
