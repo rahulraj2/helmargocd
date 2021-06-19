@@ -24,6 +24,9 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          env:
+           - name: ENV_BUILD_NUMBER
+             value: "{{ .Values.image.repository }}-{{ .Values.buildNumber }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
