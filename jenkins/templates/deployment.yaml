@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "jenkins.fullname" . }}
+  labels:
+    app: {{ template "jenkins.name" . }}
+    chart: {{ template "jenkins.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    test: "{{ .Values.image.repository }}-{{ .Values.buildNumber }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: {{ template "jenkins.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "jenkins.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          env:
+           - name: ENV_BUILD_NUMBER
+             value: "{{ .Values.image.repository }}-{{ .Values.buildNumber }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          envFrom:
+           - configMapRef:
+              name: {{ template "jenkins.fullname" . }}
+          volumeMounts:
+           - name: config
+             mountPath: "/config"
+             readOnly: true
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+      volumes:
+    # You set volumes at the Pod level, then mount them into containers inside that Pod
+       - name: config
+         configMap:
+        # Provide the name of the ConfigMap you want to mount.
+          name: game-demo
+        # An array of keys from the ConfigMap to create as files
+          items:
+           - key: "game.properties"
+             path: "game.properties"
+           - key: "user-interface.properties"
+             path: "user-interface.properties"
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
