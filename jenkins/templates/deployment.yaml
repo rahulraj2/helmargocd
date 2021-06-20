@@ -31,9 +31,6 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
-          envFrom:
-           - configMapRef:
-              name: {{ template "jenkins.fullname" . }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
