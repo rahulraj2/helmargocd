@@ -12,7 +12,7 @@ metadata:
     router: "{{ $env }}"
     {{- include "namespace.labels" $ | nindent 4 }}
 {{- with $labels }}
-    {{ toYaml - | nindent 4 }}
+    {{ toYaml . | nindent 4 }}
 {{- end }}
 {{- with $annotaions }}
   annotaions:
