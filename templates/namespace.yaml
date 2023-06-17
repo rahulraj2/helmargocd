@@ -10,7 +10,6 @@ metadata:
   name: "{{ $key }}-{{ $env }}"
   labels:
     router: "{{ $env }}"
-    {{- include "namespace.labels" $ | nindent 4 }}
 {{- with $labels }}
     {{ toYaml . | nindent 4 }}
 {{- end }}
