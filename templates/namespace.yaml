@@ -1,7 +1,7 @@
 {{- $annotaions := .Values.annotaions -}}
 {{- $labels := .Values.labels -}}
 {{- $helmResourcePolicy := .Values.helmResourcePolicy -}}
-{{- $key := .Values.namespaces -}}
+{{- range $key := .Values.namespaces }}
 {{- range $env := .Values.env}}
 ---
 apiVersion: v1
@@ -17,6 +17,7 @@ metadata:
   annotaions:
     kubernetes.io/description: "{{ $key }}-{{ $env }}"
 {{ toYaml . | indent 4 }}
+{{- end }}
 {{- end }}
 {{- end -}}
 
