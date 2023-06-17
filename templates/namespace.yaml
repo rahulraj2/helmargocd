@@ -17,7 +17,7 @@ metadata:
 {{- with $annotaions }}
   annotaions:
     kubernetes.io/description: "{{ $key }}-{{ $env }}"
-{{ toYaml . | nindent 4 }}
+{{ toYaml . | indent 4 }}
 {{- end }}
 {{- end -}}
 
