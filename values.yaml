@@ -42,9 +42,7 @@ tolerations: []
 
 affinity: {}
 
-namespaces: 
-  - testnamespace
-  - hello
+namespaces: testnamespace
 helmResourcePolicy: "keep"
 labels:
   argocd.argoproj.io/managed-by: argocd
