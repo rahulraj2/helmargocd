@@ -1,7 +1,7 @@
 {{- $annotaions := .Values.annotaions -}}
 {{- $labels := .Values.labels -}}
 {{- $helmResourcePolicy := .Values.helmResourcePolicy -}}
-{{- range $key := .Values.namespaces }}
+{{- range $key := .Values.namespaces}}
 {{- range $env := .Values.env}}
 ---
 apiVersion: v1
