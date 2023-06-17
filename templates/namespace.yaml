@@ -1,0 +1,23 @@
+{{- $annotaions := .Values.annotaions -}}
+{{- $labels := .Values.labels -}}
+{{- $helmResourcePolicy := .Values.helmResourcePolicy -}}
+{{- $key :- .Values.namespaces -}}
+{{- range $env := .Values.env -}}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "{{ $key }}-{{ $env }}"
+  labels:
+    router: "{{ $env }}"
+    {{- include "namespace.labels" $ | nindent 4 }}
+{{- with $labels }}
+    {{ toYaml - | nindent 4 }}
+{{- end }}
+{{- with $annotaions }}
+  annotaions:
+    kubernetes.io/description: "{{ $key }}-{{ $env }}"
+{{ toYaml - | nindent 4 }}
+{{- end }}
+{{- end -}}
+

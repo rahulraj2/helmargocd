@@ -41,3 +41,15 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+namespace: testnamespace
+helmResourcePolicy: "keep"
+labels:
+  argocd.argoproj.io/managed-by: argocd
+  testlabel: test
+annotations:
+  kubernetes.io/requester: system:admin
+env:
+ - dev
+ - sit
+
