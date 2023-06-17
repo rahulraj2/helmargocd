@@ -1,0 +1,9 @@
+namespaces: commonservices
+helmResourcePolicy: "keep"
+labels:
+  argocd.argoproj.io/managed-by: argocd
+annotations:
+  kubernetes.io/requester: system:admin
+env:
+ - dev
+ - sit
