@@ -11,7 +11,7 @@ inputs:
     description: 'Path to place the repository in the workspace (default: workspace root).'
     required: false
   token:
-    description: 'Token to use for checkout. Typically ${{ secrets.GITHUB_TOKEN }}.'
+    description: 'Token to use for checkout (for example, the repository GITHUB_TOKEN secret).'
     required: false
   submodules:
     description: 'Whether to fetch submodules (true/false).'

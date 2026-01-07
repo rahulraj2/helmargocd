@@ -65,6 +65,7 @@ jobs:
         with:
           ref: 'master'
           repository: 'rahulraj2/helmargocd'
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: "Install NodeJS using composite action Locally"
         uses: ./.github/actions/installation-action/action.yml
         with:
@@ -99,6 +100,7 @@ jobs:
         with:
           ref: 'master'
           repository: 'rahulraj2/helmargocd'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "NodeJS Setup using composite action Locally"
         uses: ./.github/actions/installation-action
