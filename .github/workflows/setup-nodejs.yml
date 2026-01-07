@@ -1,0 +1,43 @@
+name: NodeJS Setup and Install Express
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  setup-node:
+    runs-on: my-runners
+
+    steps:
+      - name: Debug: Starting checkout
+        run: echo "🔍 Starting checkout step..."
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Debug: Setting up Node.js
+        run: echo "⚙️ Setting up Node.js version 22..."
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify Node & npm versions
+        run: |
+          echo "🔧 Checking Node.js and npm versions..."
+          echo "Node version:"
+          node -v
+          echo "npm version:"
+          npm -v
+
+      - name: Install dependencies
+        run: |
+          echo "📦 Running npm install to install project dependencies..."
+          npm install
+
+      - name: Install Express
+        run: |
+          echo "🚀 Installing Express framework..."
+          npm install express
+          echo "✅ Express installation completed."
