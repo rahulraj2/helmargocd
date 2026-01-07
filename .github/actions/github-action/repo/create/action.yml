@@ -22,8 +22,8 @@ runs:
       env:
         GH_TOKEN: ${{ inputs.github_token }}
       shell: bash
+      # Using GitHub API to create a repository
       run: |
-        // use github api to create repo
         curl -H "Authorization: token $GH_TOKEN" \
              -d "{\"name\":\"${{ inputs.repo_name }}\", \"description\":\"${{ inputs.repo_description }}\", \"private\":${{ inputs.is_private }}}" \
              https://api.github.com/orgs/rahulraj2/repos
