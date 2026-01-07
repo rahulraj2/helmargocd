@@ -1,28 +1,17 @@
-name: Podman CI
+name: Cat File Example
 
 on:
-  push:
-    branches: [ master ]
+  workflow_dispatch:
 
 jobs:
-  podman-job:
+  show-file:
     runs-on: my-runners
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Podman
+      - name: Go to folder and cat file
         run: |
-          sudo apt-get update
-          sudo apt-get -y install podman
-
-
-      - name: Verify Podman installation
-        run: podman info
-
-      - name: Build container image
-        run: podman build -t myapp .
-
-      - name: Run container
-        run: podman run --rm myapp
+          cd jenkins
+          cat values.yaml
