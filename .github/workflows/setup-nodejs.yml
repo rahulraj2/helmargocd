@@ -66,8 +66,9 @@ jobs:
           ref: 'master'
           repository: 'rahulraj2/helmargocd'
           token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: "Install NodeJS using composite action Locally"
-        uses: ./.github/actions/installation-action/action.yml
+        uses: ./.github/actions/installation-action
         with:
           node-version: '22'
 
@@ -116,16 +117,18 @@ jobs:
         run: |
           node scripts/sample-node-script.js foo bar
 
-      - name: Run PowerShell script (pwsh)
-        shell: pwsh
-        run: |
-          ./scripts/deploy.ps1 -Param 'value-from-workflow'
+      # - name: Run PowerShell script (pwsh)
+      #   shell: pwsh
+      #   run: |
+      #     ./scripts/deploy.ps1 -Param 'value-from-workflow'
 
   # --- Example 2: Use the composite action stored at .github/actions/my-action
   run-composite-action:
     needs: setup-node
     runs-on: my-runners
     steps:
+      - *checkout_step
+      
       - name: Invoke composite action (local)
         uses: ./.github/actions/my-action
         with:
