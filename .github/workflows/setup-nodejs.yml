@@ -9,13 +9,13 @@ jobs:
     runs-on: my-runners
 
     steps:
-      - name: Debug: Starting checkout
+      - name: "Debug: Starting checkout"
         run: echo "🔍 Starting checkout step..."
 
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Debug: Setting up Node.js
+      - name: "Debug: Setting up Node.js"
         run: echo "⚙️ Setting up Node.js version 22..."
 
       - name: Setup Node.js 22
