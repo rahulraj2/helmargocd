@@ -24,6 +24,29 @@ runs:
       shell: bash
       # Using GitHub API to create a repository
       run: |
-        curl -H "Authorization: token $GH_TOKEN" \
+        # Using GitHub API to create a repository
+        response=$(curl -s -w "\n%{http_code}" -H "Authorization: token $GH_TOKEN" \
              -d "{\"name\":\"${{ inputs.repo_name }}\", \"description\":\"${{ inputs.repo_description }}\", \"private\":${{ inputs.is_private }}}" \
-             https://api.github.com/orgs/rahulraj2/repos
+             https://api.github.com/user/repos)
+        
+        # Extract HTTP status code and response body
+        http_code=$(echo "$response" | tail -n1)
+        body=$(echo "$response" | head -n-1)
+        
+        echo "HTTP Status Code: $http_code"
+        echo "Repository creation response:"
+        echo "$body"
+        
+        # Check if status code is not 201 (Created)
+        if [ "$http_code" != "201" ]; then
+          echo "Error: Failed to create repository. HTTP Status: $http_code"
+          echo "Response: $body"
+          exit 1
+        fi
+        
+        # Parse and extract key information from JSON response
+        repo_url=$(echo "$body" | grep -o '"html_url":"[^"]*' | cut -d'"' -f4)
+        repo_id=$(echo "$body" | grep -o '"id":[0-9]*' | head -1 | cut -d':' -f2)
+        
+        echo "Repository URL: $repo_url"
+        echo "Repository ID: $repo_id"
