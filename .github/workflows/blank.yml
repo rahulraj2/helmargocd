@@ -3,6 +3,6 @@ on: [push]
 
 jobs:
   test:
-    runs-on: my-runner
+    runs-on: my-runners
     steps:
       - run: echo "First Runner Works !! "
