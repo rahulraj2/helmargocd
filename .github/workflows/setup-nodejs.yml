@@ -41,6 +41,7 @@ jobs:
           echo "🚀 Installing Express framework..."
           npm install express
           echo "✅ Express installation completed."
+
   execute-sonarqube-scan:
     needs: setup-node
     runs-on: my-runners
@@ -54,3 +55,31 @@ jobs:
           echo "🔍 Starting SonarQube scan..."
           # Add your SonarQube scan commands here
           echo "✅ SonarQube scan completed."
+
+  parallel-stage-1:
+    needs: [setup-node]
+    runs-on: my-runners
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Parallel Task 1
+        run: |
+          echo "🔄 Running parallel task 1..."
+          # Add your commands for parallel task 1 here
+          echo "✅ Parallel task 1 completed."
+
+  parallel-stage-2:
+    needs: [setup-node]
+    runs-on: my-runners
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Parallel Task 2
+        run: |
+          echo "🔄 Running parallel task 2..."
+          # Add your commands for parallel task 2 here
+          echo "✅ Parallel task 2 completed."
