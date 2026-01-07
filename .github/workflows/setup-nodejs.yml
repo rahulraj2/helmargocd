@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: |
           echo "📦 Running npm install to install project dependencies..."
-          npm install
+          npm install fs
 
       - name: Install Express
         run: |
