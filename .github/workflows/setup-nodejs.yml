@@ -14,9 +14,9 @@ jobs:
         run: echo "🔍 Starting checkout step..."
 
       # Anchor a checkout step so we can reuse it later with '*checkout_step'
-      # - &checkout_step
-      #   name: Checkout repository
-      #   uses: actions/checkout@v4
+      - &checkout_step
+        name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: "Debug: Setting up Node.js"
         run: echo "⚙️ Setting up Node.js version 22..."
@@ -45,7 +45,7 @@ jobs:
     runs-on: my-runners
 
     steps:
-      # - *checkout_step
+      - *checkout_step
 
       - name: Execute SonarQube Scan
         run: |
@@ -59,11 +59,12 @@ jobs:
     runs-on: my-runners
 
     steps:
+      - *checkout_step
       - name: "Checkout using composite action Locally"
         uses: ./.github/actions/checkout-action
         with:
           ref: 'master'
-          repository: 'helmargocd'
+          repository: 'rahulraj2/helmargocd'
       - name: "Install NodeJS using composite action Locally"
         uses: ./.github/actions/installation-action/action.yml
         with:
@@ -92,12 +93,12 @@ jobs:
     needs: setup-node
     runs-on: my-runners
     steps:
-      # - *checkout_step
+      - *checkout_step
       - name: "Checkout using composite action Locally"
         uses: ./.github/actions/checkout-action
         with:
           ref: 'master'
-          repository: 'helmargocd'
+          repository: 'rahulraj2/helmargocd'
 
       - name: "NodeJS Setup using composite action Locally"
         uses: ./.github/actions/installation-action
