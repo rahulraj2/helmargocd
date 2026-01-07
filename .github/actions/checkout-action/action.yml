@@ -1,0 +1,29 @@
+name: "repo-checkout"
+description: "Lightweight composite wrapper around actions/checkout@v4 with common inputs"
+inputs:
+  repository:
+    description: 'Repository to checkout (owner/repo). Defaults to current repo.'
+    required: false
+  ref:
+    description: 'Branch, tag or SHA to checkout (defaults to workflow ref).'
+    required: false
+  path:
+    description: 'Path to place the repository in the workspace (default: workspace root).'
+    required: false
+  token:
+    description: 'Token to use for checkout. Typically ${{ secrets.GITHUB_TOKEN }}.'
+    required: false
+  submodules:
+    description: 'Whether to fetch submodules (true/false).'
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.ref }}
+        path: ${{ inputs.path }}
+        token: ${{ inputs.token }}
+        submodules: ${{ inputs.submodules }}
