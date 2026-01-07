@@ -41,3 +41,16 @@ jobs:
           echo "🚀 Installing Express framework..."
           npm install express
           echo "✅ Express installation completed."
+  execute-sonarqube-scan:
+    needs: setup-node
+    runs-on: my-runners
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Execute SonarQube Scan
+        run: |
+          echo "🔍 Starting SonarQube scan..."
+          # Add your SonarQube scan commands here
+          echo "✅ SonarQube scan completed."
