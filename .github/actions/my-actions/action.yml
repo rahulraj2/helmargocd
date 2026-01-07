@@ -1,0 +1,39 @@
+name: "repo-composite-action"
+description: "Composite action that sets up Node and runs an optional script"
+inputs:
+  node-version:
+    description: 'Node.js version to install'
+    required: true
+  script:
+    description: 'Optional script path (relative to repo root) to run'
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Install dependencies if present
+      shell: bash
+      run: |
+        if [ -f package.json ]; then
+          npm ci || npm install
+        else
+          echo "No package.json found — skipping npm install"
+        fi
+
+    - name: Run provided script (if any)
+      shell: bash
+      run: |
+        if [ -n "${{ inputs.script }}" ]; then
+          chmod +x "${{ inputs.script }}" || true
+          echo "Running script: ${{ inputs.script }}"
+          bash "${{ inputs.script }}"
+        else
+          echo "No script input provided to composite action"
+        fi

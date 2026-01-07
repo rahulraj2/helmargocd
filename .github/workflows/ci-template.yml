@@ -1,0 +1,37 @@
+name: Reusable CI Template
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+      script:
+        required: false
+        type: string
+
+jobs:
+  build:
+    runs-on: my-runners
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Install dependencies if present
+        run: |
+          if [ -f package.json ]; then
+            npm ci
+          else
+            echo "No package.json; skipping npm install"
+          fi
+
+      - name: Run script from inputs (if provided)
+        if: ${{ inputs.script != '' }}
+        run: |
+          chmod +x "${{ inputs.script }}" || true
+          bash "${{ inputs.script }}"

@@ -5,6 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
+  # Primary setup job — other jobs will `need` this one
   setup-node:
     runs-on: my-runners
 
@@ -12,7 +13,9 @@ jobs:
       - name: "Debug: Starting checkout"
         run: echo "🔍 Starting checkout step..."
 
-      - name: Checkout repository
+      # Anchor a checkout step so we can reuse it later with '*checkout_step'
+      - &checkout_step
+        name: Checkout repository
         uses: actions/checkout@v4
 
       - name: "Debug: Setting up Node.js"
@@ -31,24 +34,18 @@ jobs:
           echo "npm version:"
           npm -v
 
-      - name: Install dependencies
+      - name: Install dependencies if present
         run: |
-          echo "📦 Running npm install to install project dependencies..."
-          npm install fs
+          echo "📦 Installing dependencies if present"
+          if [ -f package.json ]; then npm ci; else echo "no package.json"; fi
 
-      - name: Install Express
-        run: |
-          echo "🚀 Installing Express framework..."
-          npm install express
-          echo "✅ Express installation completed."
-
+  # SonarQube scan (example) — reuses the anchored checkout step
   execute-sonarqube-scan:
     needs: setup-node
     runs-on: my-runners
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - *checkout_step
 
       - name: Execute SonarQube Scan
         run: |
@@ -56,18 +53,18 @@ jobs:
           # Add your SonarQube scan commands here
           echo "✅ SonarQube scan completed."
 
+  # Two jobs that run in parallel because they both only need `setup-node`
   parallel-stage-1:
     needs: [setup-node]
     runs-on: my-runners
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - *checkout_step
 
       - name: Run Parallel Task 1
         run: |
+          node scripts/sample-node-script.js foo bar
           echo "🔄 Running parallel task 1..."
-          # Add your commands for parallel task 1 here
           echo "✅ Parallel task 1 completed."
 
   parallel-stage-2:
@@ -75,11 +72,49 @@ jobs:
     runs-on: my-runners
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - *checkout_step
 
       - name: Run Parallel Task 2
         run: |
           echo "🔄 Running parallel task 2..."
-          # Add your commands for parallel task 2 here
           echo "✅ Parallel task 2 completed."
+
+  # --- Example 1: Run local scripts directly (bash, node, pwsh)
+  run-local-scripts:
+    needs: setup-node
+    runs-on: my-runners
+    steps:
+      - *checkout_step
+
+      - name: Run bash script (Linux/macOS)
+        run: |
+          chmod +x scripts/deploy.sh || true
+          ./scripts/deploy.sh "arg1" "arg2"
+
+      - name: Run Node script
+        run: |
+          node scripts/sample-node-script.js foo bar
+
+      - name: Run PowerShell script (pwsh)
+        shell: pwsh
+        run: |
+          ./scripts/deploy.ps1 -Param 'value-from-workflow'
+
+  # --- Example 2: Use the composite action stored at .github/actions/my-action
+  run-composite-action:
+    needs: setup-node
+    runs-on: my-runners
+    steps:
+      - name: Invoke composite action (local)
+        uses: ./.github/actions/my-action
+        with:
+          node-version: '22'
+          script: 'scripts/deploy.sh'
+
+  # --- Example 3: Call the reusable workflow template in .github/workflows/ci-template.yml
+  call-reusable-workflow:
+    needs: setup-node
+    uses: ./.github/workflows/ci-template.yml
+    with:
+      node-version: '22'
+      script: 'scripts/deploy.sh'
