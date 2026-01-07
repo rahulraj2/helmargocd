@@ -61,7 +61,7 @@ jobs:
     steps:
       # - *checkout_step
       - name: "Install NodeJS using composite action Locally"
-        uses: ./.github/actions/installation-action/nodejs.yml
+        uses: ./.github/actions/installation-action/action.yml
         with:
           node-version: '22'
 
@@ -95,7 +95,7 @@ jobs:
           ref: 'master'
           repository: 'helmargocd'
       - name: "NodeJS Setup using composite action Locally"
-        uses: ./.github/actions/installation-action/nodejs.yml
+        uses: ./.github/actions/installation-action/action.yml
         with:
           node-version: '22'
       - name: Run bash script (Linux/macOS)
