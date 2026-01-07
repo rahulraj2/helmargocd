@@ -2,7 +2,7 @@ name: Podman CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   podman-job:
