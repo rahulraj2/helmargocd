@@ -1,0 +1,20 @@
+name: GitHub Utilities Workflow
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  setup:
+    runs-on: my-runners
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout Repository
+
+      - name: "Calling GitHub Repo Creation Composite Action"
+        uses: ./.github/modules/create-repo.yml
+        with:
+          repo-name: 'sample-repo-from-action'
+          private: false
+
+  # Primary setup job — other jobs will `need` this one

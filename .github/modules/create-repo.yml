@@ -1,0 +1,31 @@
+name: Create Repository
+description: 'Reusable workflow to create a GitHub repository'
+
+on:
+  workflow_call:
+    inputs:
+      repo_name:
+        description: 'Name of the repository to create'
+        required: true
+        type: string
+      repo_description:
+        description: 'Description of the repository'
+        required: false
+        type: string
+      is_private:
+        description: 'Whether the repository should be private'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  create-repo:
+    steps:
+      - name: Create Repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          // use github api to create repo
+          curl -H "Authorization: token $GH_TOKEN" \
+               -d "{\"name\":\"${{ inputs.repo_name }}\", \"description\":\"${{ inputs.repo_description }}\", \"private\":${{ inputs.is_private }}}" \
+               https://api.github.com/orgs/rahulraj2/repos
