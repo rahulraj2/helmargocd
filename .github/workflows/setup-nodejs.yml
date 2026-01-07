@@ -59,7 +59,11 @@ jobs:
     runs-on: my-runners
 
     steps:
-      # - *checkout_step
+      - name: "Checkout using composite action Locally"
+        uses: ./.github/actions/checkout-action
+        with:
+          ref: 'master'
+          repository: 'helmargocd'
       - name: "Install NodeJS using composite action Locally"
         uses: ./.github/actions/installation-action/action.yml
         with:
@@ -90,14 +94,16 @@ jobs:
     steps:
       # - *checkout_step
       - name: "Checkout using composite action Locally"
-        uses: ./.github/checkout-action/action.yml
+        uses: ./.github/actions/checkout-action
         with:
           ref: 'master'
           repository: 'helmargocd'
+
       - name: "NodeJS Setup using composite action Locally"
-        uses: ./.github/actions/installation-action/action.yml
+        uses: ./.github/actions/installation-action
         with:
           node-version: '22'
+          
       - name: Run bash script (Linux/macOS)
         run: |
           chmod +x scripts/deploy.sh || true
