@@ -12,9 +12,11 @@ jobs:
         name: Checkout Repository
 
       - name: "Calling GitHub Repo Creation Composite Action"
-        uses: ./.github/modules/create-repo.yml
+        uses: ./.github/actions/github-action/repo/create
         with:
-          repo-name: 'sample-repo-from-action'
-          private: false
+          repo_name: 'sample-repo-from-action'
+          repo_description: 'Sample repository created from composite action'
+          is_private: false
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   # Primary setup job — other jobs will `need` this one
