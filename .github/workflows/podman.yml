@@ -17,6 +17,7 @@ jobs:
           sudo apt-get update
           sudo apt-get -y install podman
 
+
       - name: Verify Podman installation
         run: podman info
 
