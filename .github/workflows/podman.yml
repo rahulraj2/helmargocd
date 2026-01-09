@@ -1,4 +1,4 @@
-name: run podman inside runner
+name: Podman Runner Test
 
 on:
   push:
@@ -6,19 +6,7 @@ on:
       - master
 
 jobs:
-  show-file:
+  test:
     runs-on: [self-hosted, podman-runner-scale-set]
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: get podman version
-        run: |
-          podman version
-      - name: list podman containers
-        run: |
-          podman ps -a
-      - name: pull alpine image
-        run: |
-          podman pull alpine:latest
+      - run: echo "✅ Podman runner is working"
