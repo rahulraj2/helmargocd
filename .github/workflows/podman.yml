@@ -7,6 +7,6 @@ on:
 
 jobs:
   test:
-    runs-on: [self-hosted, ocp-runners]
+    runs-on: ocp-runners
     steps:
       - run: echo "✅ Podman runner is working"
