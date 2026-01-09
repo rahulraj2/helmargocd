@@ -7,6 +7,6 @@ on:
 
 jobs:
   test:
-    runs-on: podman-runner-scale-set
+    runs-on: ocp-runners
     steps:
       - run: echo "✅ Podman runner is working"
