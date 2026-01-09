@@ -1,17 +1,24 @@
-name: Cat File Example
+name: run podman inside runner
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - master
 
 jobs:
   show-file:
-    runs-on: my-runners
+    runs-on: podman-runner-scale-set
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Go to folder and cat file
+      - name: get podman version
         run: |
-          cd jenkins
-          cat values.yaml
+          podman version
+      - name: list podman containers
+        run: |
+          podman ps -a
+      - name: pull alpine image
+        run: |
+          podman pull alpine:latest
