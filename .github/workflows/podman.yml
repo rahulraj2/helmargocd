@@ -7,7 +7,7 @@ on:
 
 jobs:
   show-file:
-    runs-on: [self-hosted, podman]
+    runs-on: [self-hosted, podman-runner-scale-set]
 
     steps:
       - name: Checkout repository
