@@ -11,6 +11,7 @@ jobs:
     steps:
       - run: |
          echo "✅ Podman runner is working"
+         podman info
          podman --version
          podman pull alpine
          podman build -t my-alpine-image - <<EOF
