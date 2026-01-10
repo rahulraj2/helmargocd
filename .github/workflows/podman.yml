@@ -7,6 +7,6 @@ on:
 
 jobs:
   test:
-    runs-on: my-runners
+    runs-on: [self-hosted, podman, rootless]
     steps:
       - run: echo "✅ Podman runner is working"
