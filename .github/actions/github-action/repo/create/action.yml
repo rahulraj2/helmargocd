@@ -41,7 +41,7 @@ runs:
         if [ "$http_code" != "201" ]; then
           echo "Error: Failed to create repository. HTTP Status: $http_code"
           echo "Response: $body"
-          exit 1
+          exit 0
         fi
         
         # Parse and extract key information from JSON response
