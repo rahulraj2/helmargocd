@@ -9,4 +9,14 @@ jobs:
   test:
     runs-on: podman-runners
     steps:
-      - run: echo "✅ Podman runner is working"
+      - run: |
+         - echo "✅ Podman runner is working"
+         - podman --version
+         - podman pull alpine
+         - podman build -t my-alpine-image - <<EOF
+           FROM alpine
+           CMD ["echo", "Hello from Podman container!"]
+           EOF
+         - podman run --rm my-alpine-image
+         - echo "🚀 Podman container ran successfully"
+
