@@ -3,6 +3,8 @@ on: [push]
 
 jobs:
   test:
-    runs-on: my-runners
+    runs-on: podman-runners
     steps:
-      - run: echo "First Runner Works !! "
+      - run: | 
+         echo "First Runner Works !! "
+         podman info
