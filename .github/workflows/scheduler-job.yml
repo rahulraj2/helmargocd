@@ -8,8 +8,7 @@ on:
 
 jobs:
   run-scheduled-task:
-    runs-on: my-runners
-
+    runs-on: podman-runners
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
